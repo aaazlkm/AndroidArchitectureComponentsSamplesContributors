@@ -11,3 +11,10 @@ android {
         applicationId constant.applicationId
     }
 }
+
+dependencies {
+    implementation project(appmodule.presentation)
+    implementation project(appmodule.domain)
+    implementation project(appmodule.infra)
+    implementation project(appmodule.core)
+}

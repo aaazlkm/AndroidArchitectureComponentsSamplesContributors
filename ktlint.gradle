@@ -24,5 +24,3 @@ task ktlint(type: JavaExec, group: "verification") {
     main = "com.pinterest.ktlint.Main"
     args "-F", "src/**/*.kt", "--reporter=plain?group_by_file,output=${buildDir}/ktlint.txt"
 }
-
-preBuild.dependsOn ktlint
