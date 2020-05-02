@@ -1,0 +1,87 @@
+ext {
+    appmodule = [
+            "presentation": ":presentation",
+            "domain"      : ":domain",
+            "infra"       : ":infra",
+            "core"        : ":core",
+    ]
+
+    constant = [
+            "compileSdkVersion"        : 29,
+            "applicationId"            : "hoge.hogehoge.androidarchitecturecomponentssamplescontributors",
+            "minSdkVersion"            : 24,
+            "targetSdkVersion"         : 29,
+            "versionCode"              : 1,
+            "versionName"              : "1.0.0",
+            "testInstrumentationRunner": "androidx.test.runner.AndroidJUnitRunner",
+    ]
+
+    varsion = [
+            "androidx": [
+                    "appcompat"       : "1.1.0",
+                    "core"            : "1.2.0",
+                    "constraintlayout": "1.1.3",
+                    "recyclerview"    : "1.1.0",
+                    "lifecycle"       : "2.2.0",
+            ],
+            "test"    : [
+                    "junit"   : "4.12",
+                    "ext"     : "1.1.1",
+                    "espresso": "3.2.0",
+                    "core"    : "1.2.0"
+            ],
+            "material": "1.1.0",
+            "rxjava"  : "3.0.0",
+            "dagger"  : "2.27",
+            "retrofit": [
+                    "retrofit": "2.8.1",
+                    "gson"    : "2.8.1",
+                    "rxjava2" : "2.8.1",
+                    "logging" : "4.4.0",
+            ],
+            "gson"    : "2.8.6",
+            "timber"  : "4.7.1",
+            "ktlint"  : "0.36.0",
+    ]
+
+    dependency = [
+            "androidx": [
+                    "appcompat"       : "androidx.appcompat:appcompat:${varsion.androidx.appcompat}",
+                    "core"            : "androidx.core:core-ktx:${varsion.androidx.core}",
+                    "constraintlayout": "androidx.constraintlayout:constraintlayout:${varsion.androidx.constraintlayout}",
+                    "recyclerview"    : "androidx.recyclerview:recyclerview:${varsion.androidx.recyclerview}",
+                    "lifecycle"       : [
+                            "viewmodel": "androidx.lifecycle:lifecycle-viewmodel-ktx:${varsion.androidx.lifecycle}",
+                            "common"   : "androidx.lifecycle:lifecycle-common-java8:${varsion.androidx.lifecycle}",
+                    ],
+            ],
+            "test"    : [
+                    "junit"   : "junit:junit:${varsion.test.junit}",
+                    "ext"     : "androidx.test.ext:junit:${varsion.test.ext}",
+                    "espresso": "androidx.test.espresso:espresso-core:${varsion.test.espresso}",
+                    "core"    : "androidx.test:core:${varsion.test.core}"
+            ],
+            "material": "com.google.android.material:material:${varsion.material}",
+            "rxjava"  : [
+                    "rxjava"   : "io.reactivex.rxjava3:rxjava:${varsion.rxjava}",
+                    "rxandroid": "io.reactivex.rxjava3:rxandroid:${varsion.rxjava}",
+                    "rxkotlin" : "io.reactivex.rxjava3:rxkotlin:${varsion.rxjava}",
+            ],
+            "dagger"  : [
+                    "dagger"          : "com.google.dagger:dagger:${varsion.dagger}",
+                    "compiler"        : "com.google.dagger:dagger-compiler:${varsion.dagger}",
+                    "android"         : "com.google.dagger:dagger-android:${varsion.dagger}",
+                    "androidsupport"  : "com.google.dagger:dagger-android-support:${varsion.dagger}",
+                    "androidprocessor": "com.google.dagger:dagger-android-processor:${varsion.dagger}",
+            ],
+            "retrofit": [
+                    "retrofit": "com.squareup.retrofit2:retrofit:${varsion.retrofit.retrofit}",
+                    "gson"    : "com.squareup.retrofit2:converter-gson:${varsion.retrofit.gson}",
+                    "rxjava2" : "com.squareup.retrofit2:adapter-rxjava2:${varsion.retrofit.rxjava2}",
+                    "logging" : "com.squareup.okhttp3:logging-interceptor:${varsion.retrofit.logging}",
+            ],
+            "gson"    : "com.google.code.gson:gson:${varsion.gson}",
+            "timber"  : "com.jakewharton.timber:timber:${varsion.timber}",
+            "ktlint"  : "com.pinterest:ktlint:${varsion.ktlint}",
+    ]
+}

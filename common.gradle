@@ -1,0 +1,65 @@
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+
+android {
+    compileSdkVersion constant.compileSdkVersion
+
+    defaultConfig {
+        minSdkVersion constant.minSdkVersion
+        targetSdkVersion constant.targetSdkVersion
+        versionCode constant.versionCode
+        versionName constant.versionName
+
+        testInstrumentationRunner constant.testInstrumentationRunner
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+
+    testImplementation dependency.test.junit
+    kapt dependency.test.ext
+    kapt dependency.test.espresso
+    androidTestImplementation dependency.test.core
+    androidTestImplementation dependency.test.ext
+
+    implementation dependency.androidx.appcompat
+    implementation dependency.androidx.core
+    implementation dependency.androidx.constraintlayout
+    implementation dependency.androidx.recyclerview
+    implementation dependency.androidx.lifecycle.viewmodel
+    implementation dependency.androidx.lifecycle.common
+
+    implementation dependency.material
+
+    implementation dependency.rxjava.rxjava
+    implementation dependency.rxjava.rxandroid
+    implementation dependency.rxjava.rxkotlin
+
+    implementation dependency.dagger.dagger
+    implementation dependency.dagger.android
+    implementation dependency.dagger.androidsupport
+    kapt dependency.dagger.compiler
+    kapt dependency.dagger.androidprocessor
+
+    implementation dependency.retrofit.retrofit
+    implementation dependency.retrofit.gson
+    implementation dependency.retrofit.rxjava2
+    implementation dependency.retrofit.logging
+
+    implementation dependency.gson
+
+    implementation dependency.timber
+}

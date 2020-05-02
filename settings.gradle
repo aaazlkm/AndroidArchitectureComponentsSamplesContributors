@@ -1,2 +1,6 @@
 rootProject.name='AndroidArchitectureComponentsSamplesContributors'
 include ':app'
+include ':presentation'
+include ':domain'
+include ':infra'
+include ':core'

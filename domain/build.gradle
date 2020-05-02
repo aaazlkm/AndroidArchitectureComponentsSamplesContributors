@@ -1,4 +1,4 @@
-apply plugin: 'com.android.application'
+apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
@@ -8,13 +8,11 @@ apply from: "../ktlint.gradle"
 
 android {
     defaultConfig {
-        applicationId constant.applicationId
+        consumerProguardFiles 'consumer-rules.pro'
     }
 }
 
 dependencies {
-    implementation project(appmodule.presentation)
-    implementation project(appmodule.domain)
     implementation project(appmodule.infra)
     implementation project(appmodule.core)
 }

@@ -6,8 +6,29 @@
 
 ## 使用ライブラリ
 
-TODO
-記載すること
+- [android jetpack](https://developer.android.com/jetpack/)
+  - Foundation
+    - AppCompat
+    - Android KTX
+    - Test
+  - Architecture
+    - DataBinding
+    - ViewModel
+    - Room
+  - UI
+    - constraintlayout
+    - swiperefreshlayout
+    - recyclerview
+- [kotlin](https://kotlinlang.org/)
+- [Material Components for Android](https://github.com/material-components/material-components-android)
+- [RxJava](https://github.com/ReactiveX/RxJava)
+- [RxAndroid](https://github.com/ReactiveX/RxAndroid)
+- [RxKotlin](https://github.com/ReactiveX/RxKotlin)
+- [Dagger](https://github.com/google/dagger)
+- [Retrofit](https://github.com/square/retrofit)
+- [Gson](https://github.com/google/gson)
+- [ktlint](https://github.com/pinterest/ktlint)
+- [Timber](https://github.com/JakeWharton/timber)
 
 ## 開発環境
 
