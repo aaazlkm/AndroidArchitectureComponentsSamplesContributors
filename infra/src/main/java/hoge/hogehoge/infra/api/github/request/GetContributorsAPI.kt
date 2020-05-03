@@ -6,6 +6,7 @@ import hoge.hogehoge.infra.api.github.model.header.LinkHeader
 import hoge.hogehoge.infra.api.template.APIDefinition
 import hoge.hogehoge.infra.api.template.APIRequest
 import hoge.hogehoge.infra.api.template.APIResponse
+import retrofit2.Response
 
 object GetContributorsAPI {
     data class Request(
@@ -34,5 +35,12 @@ object GetContributorsAPI {
     data class Response(
         val linkHeader: LinkHeader? = null,
         val contributors: List<Contributor>
-    ) : APIResponse
+    ) : APIResponse {
+        companion object {
+            fun from(rawResponse: retrofit2.Response<List<Contributor>>): Response {
+                val linkHeader = rawResponse.headers()[LinkHeader.NAME_IN_HEADER]?.let { LinkHeader.from(it) }
+                return Response(linkHeader, rawResponse.body() ?: listOf())
+            }
+        }
+    }
 }

@@ -1,6 +1,4 @@
-package hoge.hogehoge.infra.api.github.exception
-
-import hoge.hogehoge.infra.api.template.APIException
+package hoge.hogehoge.core.exception.api
 
 class GithubException : APIException {
     constructor(code: Int) : super(code)
