@@ -31,7 +31,11 @@ ext {
                     "core"    : "1.2.0"
             ],
             "material": "1.1.0",
-            "rxjava"  : "3.0.0",
+            "rxjava"  : [
+                    "rxjava"   : "2.2.17",
+                    "rxandroid": "2.1.1",
+                    "rxkotlin" : "2.4.0",
+            ],
             "dagger"  : "2.27",
             "retrofit": [
                     "retrofit": "2.8.1",
@@ -63,9 +67,9 @@ ext {
             ],
             "material": "com.google.android.material:material:${varsion.material}",
             "rxjava"  : [
-                    "rxjava"   : "io.reactivex.rxjava3:rxjava:${varsion.rxjava}",
-                    "rxandroid": "io.reactivex.rxjava3:rxandroid:${varsion.rxjava}",
-                    "rxkotlin" : "io.reactivex.rxjava3:rxkotlin:${varsion.rxjava}",
+                    "rxjava"   : "io.reactivex.rxjava2:rxjava:${varsion.rxjava.rxjava}",
+                    "rxandroid": "io.reactivex.rxjava2:rxandroid:${varsion.rxjava.rxandroid}",
+                    "rxkotlin" : "io.reactivex.rxjava2:rxkotlin:${varsion.rxjava.rxkotlin}",
             ],
             "dagger"  : [
                     "dagger"          : "com.google.dagger:dagger:${varsion.dagger}",

@@ -1,0 +1,18 @@
+package hoge.hogehoge.domain.result
+
+sealed class Result<T> {
+    companion object {
+        fun <T> success(value: T): Result<T> = Success(value)
+
+        fun <T> failure(error: Throwable): Result<T> = Failure(error)
+
+        fun <T> loading(): Result<T> = Loading()
+
+        fun <T> onReady(): Result<T> = OnReady()
+    }
+
+    data class Success<T>(val value: T) : Result<T>()
+    data class Failure<T>(val error: Throwable) : Result<T>()
+    class Loading<T> : Result<T>()
+    class OnReady<T> : Result<T>()
+}

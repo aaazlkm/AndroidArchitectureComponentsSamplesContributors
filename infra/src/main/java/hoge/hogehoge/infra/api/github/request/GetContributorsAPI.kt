@@ -1,12 +1,11 @@
 package hoge.hogehoge.infra.api.github.request
 
 import hoge.hogehoge.infra.api.github.GithubAPIDefinition
-import hoge.hogehoge.infra.api.github.model.body.Contributor
-import hoge.hogehoge.infra.api.github.model.header.LinkHeader
+import hoge.hogehoge.infra.api.github.model.body.RawContributor
+import hoge.hogehoge.infra.api.github.model.header.RawLinkHeader
 import hoge.hogehoge.infra.api.template.APIDefinition
 import hoge.hogehoge.infra.api.template.APIRequest
 import hoge.hogehoge.infra.api.template.APIResponse
-import retrofit2.Response
 
 object GetContributorsAPI {
     data class Request(
@@ -33,12 +32,12 @@ object GetContributorsAPI {
     }
 
     data class Response(
-        val linkHeader: LinkHeader? = null,
-        val contributors: List<Contributor>
+        val rawLinkHeader: RawLinkHeader,
+        val rawContributors: List<RawContributor>
     ) : APIResponse {
         companion object {
-            fun from(rawResponse: retrofit2.Response<List<Contributor>>): Response {
-                val linkHeader = rawResponse.headers()[LinkHeader.NAME_IN_HEADER]?.let { LinkHeader.from(it) }
+            fun from(rawResponse: retrofit2.Response<List<RawContributor>>): Response {
+                val linkHeader = rawResponse.headers()[RawLinkHeader.NAME_IN_HEADER]?.let { RawLinkHeader.from(it) } ?: RawLinkHeader()
                 return Response(linkHeader, rawResponse.body() ?: listOf())
             }
         }
