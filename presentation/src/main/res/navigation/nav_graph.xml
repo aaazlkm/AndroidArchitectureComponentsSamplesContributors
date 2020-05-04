@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/repositoryFragment">
+
+    <fragment
+        android:id="@+id/repositoryFragment"
+        android:name="hoge.hogehoge.presentation.repository.repository.RepositoryFragment"
+        android:label="RepositoryFragment"
+        tools:layout="@layout/fragment_repository">
+        <action
+            android:id="@+id/action_repositoryFragment_to_contributorsFragment"
+            app:destination="@id/contributorsFragment">
+            <argument
+                android:name="owner"
+                app:argType="string" />
+            <argument
+                android:name="repository"
+                app:argType="string" />
+        </action>
+    </fragment>
+
+    <fragment
+        android:id="@+id/contributorsFragment"
+        android:name="hoge.hogehoge.presentation.repository.contributors.ContributorsFragment"
+        android:label="ContributorsFragment"
+        tools:layout="@layout/fragment_contributors">
+        <action
+            android:id="@+id/action_contributorsFragment_to_contributorFragment"
+            app:destination="@id/contributorFragment">
+            <argument
+                android:name="contributor"
+                app:argType="hoge.hogehoge.domain.entity.Contributor" />
+        </action>
+        <argument
+            android:name="owner"
+            app:argType="string" />
+        <argument
+            android:name="repository"
+            app:argType="string" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/contributorFragment"
+        android:name="hoge.hogehoge.presentation.repository.contributor.ContributorFragment"
+        android:label="ContributorFragment"
+        tools:layout="@layout/fragment_contributor">
+        <argument
+            android:name="contributor"
+            app:argType="hoge.hogehoge.domain.entity.Contributor" />
+    </fragment>
+</navigation>

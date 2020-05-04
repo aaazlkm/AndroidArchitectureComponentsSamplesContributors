@@ -23,6 +23,14 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_1_8
+    }
+
+    viewBinding {
+        enabled = true
+    }
 }
 
 dependencies {
@@ -41,6 +49,8 @@ dependencies {
     implementation dependency.androidx.recyclerview
     implementation dependency.androidx.lifecycle.viewmodel
     implementation dependency.androidx.lifecycle.common
+    implementation dependency.androidx.navigation.fragment
+    implementation dependency.androidx.navigation.ui
 
     implementation dependency.material
 
