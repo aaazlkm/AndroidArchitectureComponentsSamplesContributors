@@ -16,13 +16,14 @@ ext {
             "testInstrumentationRunner": "androidx.test.runner.AndroidJUnitRunner",
     ]
 
-    varsion = [
+    version = [
             "androidx": [
                     "appcompat"       : "1.1.0",
                     "core"            : "1.2.0",
                     "constraintlayout": "1.1.3",
                     "recyclerview"    : "1.1.0",
                     "lifecycle"       : "2.2.0",
+                    "navigation"      : "2.2.0",
             ],
             "test"    : [
                     "junit"   : "4.12",
@@ -50,42 +51,46 @@ ext {
 
     dependency = [
             "androidx": [
-                    "appcompat"       : "androidx.appcompat:appcompat:${varsion.androidx.appcompat}",
-                    "core"            : "androidx.core:core-ktx:${varsion.androidx.core}",
-                    "constraintlayout": "androidx.constraintlayout:constraintlayout:${varsion.androidx.constraintlayout}",
-                    "recyclerview"    : "androidx.recyclerview:recyclerview:${varsion.androidx.recyclerview}",
+                    "appcompat"       : "androidx.appcompat:appcompat:${version.androidx.appcompat}",
+                    "core"            : "androidx.core:core-ktx:${version.androidx.core}",
+                    "constraintlayout": "androidx.constraintlayout:constraintlayout:${version.androidx.constraintlayout}",
+                    "recyclerview"    : "androidx.recyclerview:recyclerview:${version.androidx.recyclerview}",
                     "lifecycle"       : [
-                            "viewmodel": "androidx.lifecycle:lifecycle-viewmodel-ktx:${varsion.androidx.lifecycle}",
-                            "common"   : "androidx.lifecycle:lifecycle-common-java8:${varsion.androidx.lifecycle}",
+                            "viewmodel": "androidx.lifecycle:lifecycle-viewmodel-ktx:${version.androidx.lifecycle}",
+                            "common"   : "androidx.lifecycle:lifecycle-common-java8:${version.androidx.lifecycle}",
+                    ],
+                    "navigation"      : [
+                            "fragment": "androidx.navigation:navigation-fragment-ktx:${version.androidx.navigation}",
+                            "ui"      : "androidx.navigation:navigation-ui-ktx:${version.androidx.navigation}",
                     ],
             ],
             "test"    : [
-                    "junit"   : "junit:junit:${varsion.test.junit}",
-                    "ext"     : "androidx.test.ext:junit:${varsion.test.ext}",
-                    "espresso": "androidx.test.espresso:espresso-core:${varsion.test.espresso}",
-                    "core"    : "androidx.test:core:${varsion.test.core}"
+                    "junit"   : "junit:junit:${version.test.junit}",
+                    "ext"     : "androidx.test.ext:junit:${version.test.ext}",
+                    "espresso": "androidx.test.espresso:espresso-core:${version.test.espresso}",
+                    "core"    : "androidx.test:core:${version.test.core}"
             ],
-            "material": "com.google.android.material:material:${varsion.material}",
+            "material": "com.google.android.material:material:${version.material}",
             "rxjava"  : [
-                    "rxjava"   : "io.reactivex.rxjava2:rxjava:${varsion.rxjava.rxjava}",
-                    "rxandroid": "io.reactivex.rxjava2:rxandroid:${varsion.rxjava.rxandroid}",
-                    "rxkotlin" : "io.reactivex.rxjava2:rxkotlin:${varsion.rxjava.rxkotlin}",
+                    "rxjava"   : "io.reactivex.rxjava2:rxjava:${version.rxjava.rxjava}",
+                    "rxandroid": "io.reactivex.rxjava2:rxandroid:${version.rxjava.rxandroid}",
+                    "rxkotlin" : "io.reactivex.rxjava2:rxkotlin:${version.rxjava.rxkotlin}",
             ],
             "dagger"  : [
-                    "dagger"          : "com.google.dagger:dagger:${varsion.dagger}",
-                    "compiler"        : "com.google.dagger:dagger-compiler:${varsion.dagger}",
-                    "android"         : "com.google.dagger:dagger-android:${varsion.dagger}",
-                    "androidsupport"  : "com.google.dagger:dagger-android-support:${varsion.dagger}",
-                    "androidprocessor": "com.google.dagger:dagger-android-processor:${varsion.dagger}",
+                    "dagger"          : "com.google.dagger:dagger:${version.dagger}",
+                    "compiler"        : "com.google.dagger:dagger-compiler:${version.dagger}",
+                    "android"         : "com.google.dagger:dagger-android:${version.dagger}",
+                    "androidsupport"  : "com.google.dagger:dagger-android-support:${version.dagger}",
+                    "androidprocessor": "com.google.dagger:dagger-android-processor:${version.dagger}",
             ],
             "retrofit": [
-                    "retrofit": "com.squareup.retrofit2:retrofit:${varsion.retrofit.retrofit}",
-                    "gson"    : "com.squareup.retrofit2:converter-gson:${varsion.retrofit.gson}",
-                    "rxjava2" : "com.squareup.retrofit2:adapter-rxjava2:${varsion.retrofit.rxjava2}",
-                    "logging" : "com.squareup.okhttp3:logging-interceptor:${varsion.retrofit.logging}",
+                    "retrofit": "com.squareup.retrofit2:retrofit:${version.retrofit.retrofit}",
+                    "gson"    : "com.squareup.retrofit2:converter-gson:${version.retrofit.gson}",
+                    "rxjava2" : "com.squareup.retrofit2:adapter-rxjava2:${version.retrofit.rxjava2}",
+                    "logging" : "com.squareup.okhttp3:logging-interceptor:${version.retrofit.logging}",
             ],
-            "gson"    : "com.google.code.gson:gson:${varsion.gson}",
-            "timber"  : "com.jakewharton.timber:timber:${varsion.timber}",
-            "ktlint"  : "com.pinterest:ktlint:${varsion.ktlint}",
+            "gson"    : "com.google.code.gson:gson:${version.gson}",
+            "timber"  : "com.jakewharton.timber:timber:${version.timber}",
+            "ktlint"  : "com.pinterest:ktlint:${version.ktlint}",
     ]
 }

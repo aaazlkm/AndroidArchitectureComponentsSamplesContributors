@@ -6,13 +6,14 @@ import android.widget.Toast
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.android.support.DaggerAppCompatActivity
 import hoge.hogehoge.presentation.R
+import hoge.hogehoge.presentation.databinding.ViewLoadingBinding
 
 open class BaseActivity : DaggerAppCompatActivity() {
-    private lateinit var loadingView: View
+    private lateinit var loadingView: ViewLoadingBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        loadingView = this.layoutInflater.inflate(R.layout.view_loading, findViewById(android.R.id.content))
+        loadingView = ViewLoadingBinding.inflate(this.layoutInflater, findViewById(android.R.id.content), true)
     }
 
     fun setupActionBar(title: String) {
@@ -47,6 +48,6 @@ open class BaseActivity : DaggerAppCompatActivity() {
     }
 
     fun setLoadingView(needShow: Boolean) {
-        loadingView.visibility = if (needShow) View.VISIBLE else View.GONE
+        loadingView.root.visibility = if (needShow) View.VISIBLE else View.GONE
     }
 }

@@ -1,7 +1,10 @@
 package hoge.hogehoge.domain.entity
 
+import android.os.Parcelable
 import hoge.hogehoge.infra.api.github.model.body.RawContributor
+import kotlinx.android.parcel.Parcelize
 
+@Parcelize
 data class Contributor(
     val avatarUrl: String?,
     val contributions: Int,
@@ -22,7 +25,7 @@ data class Contributor(
     val subscriptionsUrl: String?,
     val type: String?,
     val url: String?
-) {
+) : Parcelable {
     companion object {
         /**
          * APIで取得したデータからContributorを生成する
