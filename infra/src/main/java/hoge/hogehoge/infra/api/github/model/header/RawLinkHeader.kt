@@ -1,6 +1,6 @@
 package hoge.hogehoge.infra.api.github.model.header
 
-data class LinkHeader(
+data class RawLinkHeader(
     val nextPage: Int? = null,
     val lastPage: Int? = null,
     val firstPage: Int? = null,
@@ -13,8 +13,8 @@ data class LinkHeader(
     companion object {
         const val NAME_IN_HEADER = "link"
 
-        val REL_REGEX = """rel="([a-z]+)"""".toRegex()
-        val PAGE_REGEX = """page=(\d)""".toRegex()
+        private val REL_REGEX = """rel="([a-z]+)"""".toRegex()
+        private val PAGE_REGEX = """page=(\d)""".toRegex()
 
         /**
          * GithubのAPIのヘッダーに下記のような形式でページに関する情報が格納されている
@@ -30,7 +30,7 @@ data class LinkHeader(
          * @param text テキスト
          * @return LinkHeader
          */
-        fun from(text: String): LinkHeader {
+        fun from(text: String): RawLinkHeader {
             return text
                 .split(",")
                 .map {
@@ -40,7 +40,7 @@ data class LinkHeader(
                 }
                 .toMap()
                 .let { map ->
-                    LinkHeader(
+                    RawLinkHeader(
                         nextPage = map[Rel.NEXT.text],
                         lastPage = map[Rel.LAST.text],
                         firstPage = map[Rel.FIRST.text],

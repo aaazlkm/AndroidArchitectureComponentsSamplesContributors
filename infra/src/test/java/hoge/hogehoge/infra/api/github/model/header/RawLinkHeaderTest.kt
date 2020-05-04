@@ -3,7 +3,7 @@ package hoge.hogehoge.infra.api.github.model.header
 import org.junit.Assert.assertEquals
 import org.junit.Test
 
-class LinkHeaderTest {
+class RawLinkHeaderTest {
 
     @Test
     fun from() {
@@ -13,8 +13,8 @@ class LinkHeaderTest {
                     "<https://api.github.com/repositories/90792131/contributors?anon=1&page=6>; rel=\"first\", " +
                     "<https://api.github.com/repositories/90792131/contributors?anon=1&page=4>; rel=\"prev\""
 
-        val result = LinkHeader.from(testCase)
-        val expected = LinkHeader(
+        val result = RawLinkHeader.from(testCase)
+        val expected = RawLinkHeader(
             nextPage = 2,
             lastPage = 2,
             firstPage = 6,

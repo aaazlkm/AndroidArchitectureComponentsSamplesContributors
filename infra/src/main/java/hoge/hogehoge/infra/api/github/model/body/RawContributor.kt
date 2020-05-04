@@ -1,6 +1,6 @@
 package hoge.hogehoge.infra.api.github.model.body
 
-data class Contributor(
+data class RawContributor(
     val avatarUrl: String?,
     val contributions: Int?,
     val eventsUrl: String?,
