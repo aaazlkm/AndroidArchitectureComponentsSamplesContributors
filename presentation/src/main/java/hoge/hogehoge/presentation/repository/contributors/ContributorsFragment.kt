@@ -58,16 +58,18 @@ class ContributorsFragment : BaseFragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        val lastScrollPosition = (binding.contributorRecyclerView.layoutManager as? LinearLayoutManager)?.findFirstCompletelyVisibleItemPosition() ?: 0
-        val contributors = (binding.contributorRecyclerView.adapter as? ContributorsAdapter)?.getContributors() ?: listOf()
-        viewModel.saveStatus(contributors, lastScrollPosition)
+        saveState()
     }
 
     //endregion
 
+    //region BaseFragment override methods
+
     override fun setupActionBar(title: String) {
         super.setupActionBar(repository)
     }
+
+    //endregion
 
     private fun bindUI() {
         with(binding.swipeRefreshLayout) {
@@ -87,7 +89,7 @@ class ContributorsFragment : BaseFragment() {
                 })
                 setOnLoadMoreListener(object : ContributorsAdapter.OnLoadMoreListener {
                     override fun onLoadMore() {
-                        viewModel.fetchContributorsInNextPage(owner, repository)
+                        viewModel.fetchContributorsInNextPage(owner, repository, false)
                     }
                 })
             }
@@ -154,6 +156,12 @@ class ContributorsFragment : BaseFragment() {
                 }
             }
             .addTo(compositeDisposable)
+    }
+
+    private fun saveState() {
+        val contributors = (binding.contributorRecyclerView.adapter as? ContributorsAdapter)?.getContributors() ?: listOf()
+        val lastScrollPosition = (binding.contributorRecyclerView.layoutManager as? LinearLayoutManager)?.findFirstCompletelyVisibleItemPosition() ?: 0
+        viewModel.saveStatus(contributors, lastScrollPosition)
     }
 
     //region handle error

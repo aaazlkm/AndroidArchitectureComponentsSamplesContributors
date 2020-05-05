@@ -14,8 +14,6 @@
 
     <!--  fragment contributors remote -->
     <color name="image_loading">@color/mc_grey_400</color>
-    <color name="item_contributors_background">@color/mc_white</color>
-    <color name="item_contributors_border">@color/mc_grey_200</color>
 
     <!-- Red -->
     <color name="mc_red_50">#FFEBEE</color>

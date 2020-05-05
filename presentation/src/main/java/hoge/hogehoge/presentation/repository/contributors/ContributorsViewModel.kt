@@ -20,17 +20,23 @@ class ContributorsViewModel @Inject constructor(
         object Initialized : Status()
         data class Saved(
             var contributors: List<Contributor>,
-            var lastShowedPosition: Int
+            var lastScrollPosition: Int
         ) : Status()
     }
 
     private var linkHeader: LinkHeader? = null
 
+    //region event
+
     private val eventOfContributorsProcessor = BehaviorProcessor.createDefault<Result<Boolean>>(Result.onReady())
     val eventOfContributors: Flowable<Result<Boolean>> = eventOfContributorsProcessor.observeOn(AndroidSchedulers.mainThread())
 
-    val isLoading: Flowable<Boolean> =
-        eventOfContributorsProcessor.map { it is Result.Loading }.observeOn(AndroidSchedulers.mainThread())
+    //endregion
+
+    //region value
+
+    private val isLoadingProcessor = PublishProcessor.create<Boolean>()
+    val isLoading: Flowable<Boolean> = isLoadingProcessor.observeOn(AndroidSchedulers.mainThread())
 
     private var statusProcessor = BehaviorProcessor.createDefault<Status>(Status.Initialized)
     val status: Flowable<Status> = statusProcessor.observeOn(AndroidSchedulers.mainThread())
@@ -38,18 +44,24 @@ class ContributorsViewModel @Inject constructor(
     private val contributorsInNextPageProcessor = PublishProcessor.create<List<Contributor>>()
     val contributorsInNextPage: Flowable<List<Contributor>> = contributorsInNextPageProcessor.observeOn(AndroidSchedulers.mainThread())
 
-    fun fetchContributorsInNextPage(owner: String, repository: String) {
+    //endregion
+
+    fun fetchContributorsInNextPage(owner: String, repository: String, needLoading: Boolean = true) {
         linkHeader?.nextPage?.let {
-            fetchContributors(owner, repository, it)
+            fetchContributors(owner, repository, it, needLoading)
         } ?: run {
             contributorsInNextPageProcessor.onNext(listOf())
         }
     }
 
-    fun fetchContributors(owner: String, repository: String, page: Int? = null) {
+    fun fetchContributors(owner: String, repository: String, page: Int? = null, needLoading: Boolean = true) {
         githubUseCase.fetchContributors(owner, repository, page)
             .subscribe { result ->
                 eventOfContributorsProcessor.onNext(result.map { true })
+
+                if (needLoading) {
+                    isLoadingProcessor.onNext(result is Result.Loading)
+                }
 
                 if (result is Result.Success) {
                     val (linkHeader, contributors) = result.value

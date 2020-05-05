@@ -13,6 +13,15 @@ import io.reactivex.rxkotlin.addTo
 import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
 
+/**
+ * DiffUtilを使用したRecyclerView.Adapter
+ * このクラスを継承したAdapterを使用することでデータの更新は全て#updateItemsメソッドを使えば済む
+ *
+ * @param VIEW_HOLDER ViewHolderの型
+ * @param ITEM Itemの型
+ *
+ * @param compositeDisposable CompositeDisposable
+ */
 abstract class DiffUtilAdapter<VIEW_HOLDER, ITEM>(
     compositeDisposable: CompositeDisposable
 ) : RecyclerView.Adapter<VIEW_HOLDER>() where VIEW_HOLDER : RecyclerView.ViewHolder {
