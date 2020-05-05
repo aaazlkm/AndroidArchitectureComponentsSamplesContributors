@@ -47,12 +47,14 @@ dependencies {
     implementation dependency.androidx.core
     implementation dependency.androidx.constraintlayout
     implementation dependency.androidx.recyclerview
+    implementation dependency.androidx.swiperefreshlayout
     implementation dependency.androidx.lifecycle.viewmodel
     implementation dependency.androidx.lifecycle.common
     implementation dependency.androidx.navigation.fragment
     implementation dependency.androidx.navigation.ui
 
     implementation dependency.material
+    implementation dependency.coil
 
     implementation dependency.rxjava.rxjava
     implementation dependency.rxjava.rxandroid

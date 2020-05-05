@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import hoge.hogehoge.presentation.base.BaseFragment
 import hoge.hogehoge.presentation.databinding.FragmentRepositoryBinding
-import hoge.hogehoge.presentation.toContributorsFragment
+import hoge.hogehoge.presentation.navigateToContributorsFragment
 
 class RepositoryFragment : BaseFragment() {
 
@@ -22,7 +22,7 @@ class RepositoryFragment : BaseFragment() {
         super.onCreateView(inflater, container, savedInstanceState)
         binding = FragmentRepositoryBinding.inflate(inflater)
 
-        toContributorsFragment("googlesamples", "android-architecture-components")
+        navigateToContributorsFragment("googlesamples", "android-architecture-components")
 
         return binding.root
     }

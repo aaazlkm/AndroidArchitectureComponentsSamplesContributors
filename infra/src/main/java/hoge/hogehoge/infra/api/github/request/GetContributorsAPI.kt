@@ -11,9 +11,9 @@ object GetContributorsAPI {
     data class Request(
         val owner: String,
         val repository: String,
-        val page: Int = 0,
         /** Set to 1 or true to include anonymous contributors in results.*/
-        val needAnonymous: Boolean = true
+        val needAnonymous: Boolean = true,
+        val page: Int? = null
     ) : APIRequest<Response> {
         enum class QueryName(val queryName: String) {
             Page("page"),
@@ -25,10 +25,13 @@ object GetContributorsAPI {
         override val path = "${definition.path}/$owner/$repository/contributors"
 
         override val parameter: Map<String, String>
-            get() = mapOf(
-                QueryName.Page.queryName to "$page",
-                QueryName.ANON.queryName to "$needAnonymous"
-            )
+            get() = mutableMapOf(
+                QueryName.ANON.queryName to "$needAnonymous",
+                "client_id" to "068a8ed99e0a962b8d1c",
+                "client_secret" to "db14c42faabb64069a6c7b02a09da77e868f645c"
+            ).apply {
+                page?.let { this[QueryName.Page.queryName] = "$page" }
+            }
     }
 
     data class Response(

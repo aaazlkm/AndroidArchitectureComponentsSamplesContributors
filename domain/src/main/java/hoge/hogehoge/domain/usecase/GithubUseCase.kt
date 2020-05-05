@@ -6,5 +6,5 @@ import hoge.hogehoge.domain.result.Result
 import io.reactivex.Observable
 
 interface GithubUseCase {
-    fun fetchContributors(owner: String, repository: String, page: Int = 0): Observable<Result<Pair<LinkHeader, List<Contributor>>>>
+    fun fetchContributors(owner: String, repository: String, page: Int? = null): Observable<Result<Pair<LinkHeader, List<Contributor>>>>
 }
