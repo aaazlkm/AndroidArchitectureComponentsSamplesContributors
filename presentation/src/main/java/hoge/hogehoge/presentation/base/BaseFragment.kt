@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
-import androidx.activity.OnBackPressedCallback
 import dagger.android.support.DaggerFragment
 import hoge.hogehoge.presentation.R
 import io.reactivex.disposables.CompositeDisposable
@@ -18,24 +17,6 @@ open class BaseFragment : DaggerFragment() {
         get() = activity as? BaseActivity
 
     //region lifecycle
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-
-        activity?.onBackPressedDispatcher?.addCallback(
-            this,
-            object : OnBackPressedCallback(true) {
-                override fun handleOnBackPressed() {
-                    val backStackEntryCount = fragmentManager?.backStackEntryCount ?: 0
-                    if (backStackEntryCount <= 1) {
-                        activity?.finish()
-                    } else {
-                        onBackPressed()
-                    }
-                }
-            }
-        )
-    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = super.onCreateView(inflater, container, savedInstanceState)
@@ -56,12 +37,6 @@ open class BaseFragment : DaggerFragment() {
     open fun setupActionBar(title: String = "") {
         baseActivity?.setupActionBar(title)
     }
-
-    /**
-     * バックキーが押下された際に呼ばれる
-     * バックキーの制御をする場合このメソッドを継承する
-     */
-    open fun onBackPressed() {}
 
     fun hideKeyboard() {
         activity?.currentFocus?.let {

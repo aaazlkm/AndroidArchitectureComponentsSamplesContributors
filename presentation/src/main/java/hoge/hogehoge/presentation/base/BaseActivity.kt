@@ -17,8 +17,6 @@ open class BaseActivity : DaggerAppCompatActivity() {
     }
 
     fun setupActionBar(title: String) {
-        val canBack = supportFragmentManager.backStackEntryCount > 1
-        supportActionBar?.setDisplayHomeAsUpEnabled(canBack)
         supportActionBar?.title = title
     }
 

@@ -16,3 +16,20 @@ sealed class Result<T> {
     class Loading<T> : Result<T>()
     class OnReady<T> : Result<T>()
 }
+
+/**
+ * Resultの型を変換する
+ *
+ * @param T
+ * @param R
+ * @param transform (value: T) -> R　変換処理
+ * @return Result<R>
+ */
+inline fun <T, R> Result<T>.map(transform: (value: T) -> R): Result<R> {
+    return when (this) {
+        is Result.Success -> Result.success(transform(this.value))
+        is Result.Failure -> Result.failure(this.error)
+        is Result.Loading -> Result.loading()
+        is Result.OnReady -> Result.onReady()
+    }
+}

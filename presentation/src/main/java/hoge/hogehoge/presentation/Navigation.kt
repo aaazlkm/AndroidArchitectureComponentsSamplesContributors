@@ -9,12 +9,12 @@ import hoge.hogehoge.presentation.repository.repository.RepositoryFragmentDirect
 
 //region repository
 
-fun RepositoryFragment.toContributorsFragment(owner: String, repository: String) {
+fun RepositoryFragment.navigateToContributorsFragment(owner: String, repository: String) {
     val action = RepositoryFragmentDirections.actionRepositoryFragmentToContributorsFragment(owner, repository)
     findNavController().navigate(action)
 }
 
-fun ContributorsFragment.toContributorsFragment(contributor: Contributor) {
+fun ContributorsFragment.navigateToContributorFragment(contributor: Contributor) {
     val action = ContributorsFragmentDirections.actionContributorsFragmentToContributorFragment(contributor)
     findNavController().navigate(action)
 }

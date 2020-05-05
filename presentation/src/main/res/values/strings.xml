@@ -8,4 +8,12 @@
     <string name="common_dialog_cancel_jp">キャンセル</string>
     <string name="common_dialog_select_jp">選択する</string>
     <string name="common_dialog_retry_jp">再試行</string>
+
+    <!--  view retry  -->
+    <string name="view_retry_button">再試行</string>
+    <string name="view_retry_message">データの取得に失敗しました</string>
+
+    <!--  fragment contributors  -->
+    <string name="fragment_contributors_item_contributions">contributions:</string>
+    <string name="fragment_contributors_error_message">Contributorの取得に失敗しました</string>
 </resources>

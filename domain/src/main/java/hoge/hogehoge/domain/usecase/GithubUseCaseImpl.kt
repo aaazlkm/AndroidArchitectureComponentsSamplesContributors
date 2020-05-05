@@ -12,8 +12,8 @@ import javax.inject.Inject
 class GithubUseCaseImpl @Inject constructor(
     private val githubRepository: GithubRepository
 ) : GithubUseCase {
-    override fun fetchContributors(owner: String, repository: String, page: Int): Observable<Result<Pair<LinkHeader, List<Contributor>>>> {
-        val request = GetContributorsAPI.Request(owner, repository, page)
+    override fun fetchContributors(owner: String, repository: String, page: Int?): Observable<Result<Pair<LinkHeader, List<Contributor>>>> {
+        val request = GetContributorsAPI.Request(owner = owner, repository = repository, page = page)
 
         return githubRepository.fetchContributors(request)
             .map {
