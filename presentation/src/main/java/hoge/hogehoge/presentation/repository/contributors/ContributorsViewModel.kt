@@ -58,11 +58,9 @@ class ContributorsViewModel @Inject constructor(
         githubUseCase.fetchContributors(owner, repository, page)
             .subscribe { result ->
                 eventOfContributorsProcessor.onNext(result.map { true })
-
                 if (needLoading) {
                     isLoadingProcessor.onNext(result is Result.Loading)
                 }
-
                 if (result is Result.Success) {
                     val (linkHeader, contributors) = result.value
                     this.linkHeader = linkHeader
@@ -74,6 +72,7 @@ class ContributorsViewModel @Inject constructor(
 
     fun initializeStatus() {
         linkHeader = null
+        compositeDisposable.clear()
         statusProcessor.onNext(Status.Initialized)
     }
 
