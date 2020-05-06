@@ -29,11 +29,16 @@
         tools:layout="@layout/fragment_contributors">
         <action
             android:id="@+id/action_contributorsFragment_to_contributorFragment"
-            app:destination="@id/contributorFragment">
+            app:destination="@id/contributorFragment"
+            app:popExitAnim="@anim/slide_to_bottom">
             <argument
-                android:name="contributor"
-                app:argType="hoge.hogehoge.domain.entity.Contributor" />
+                android:name="userName"
+                app:argType="string" />
+            <argument
+                android:name="avatarUrl"
+                app:argType="string" />
         </action>
+
         <argument
             android:name="owner"
             app:argType="string" />
@@ -48,7 +53,10 @@
         android:label="ContributorFragment"
         tools:layout="@layout/fragment_contributor">
         <argument
-            android:name="contributor"
-            app:argType="hoge.hogehoge.domain.entity.Contributor" />
+            android:name="userName"
+            app:argType="string" />
+        <argument
+            android:name="avatarUrl"
+            app:argType="string" />
     </fragment>
 </navigation>

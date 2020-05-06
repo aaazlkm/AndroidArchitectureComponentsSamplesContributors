@@ -13,6 +13,7 @@ import hoge.hogehoge.domain.result.Result.Failure
 import hoge.hogehoge.presentation.R
 import hoge.hogehoge.presentation.base.BaseFragment
 import hoge.hogehoge.presentation.databinding.FragmentContributorsBinding
+import hoge.hogehoge.presentation.databinding.ItemContributorBinding
 import hoge.hogehoge.presentation.navigateToContributorFragment
 import io.reactivex.rxkotlin.addTo
 import javax.inject.Inject
@@ -83,8 +84,12 @@ class ContributorsFragment : BaseFragment() {
             layoutManager = LinearLayoutManager(this@ContributorsFragment.context)
             adapter = ContributorsAdapter(context, compositeDisposable).apply {
                 setOnItemClickListener(object : ContributorsAdapter.OnItemClickListener {
-                    override fun onItemClicked(contributor: Contributor) {
-                        navigateToContributorFragment(contributor)
+                    override fun onItemClicked(binding: ItemContributorBinding, contributor: Contributor) {
+                        contributor.login?.let {
+                            navigateToContributorFragment(binding.nameText to it, binding.imageView to (contributor.avatarUrl ?: "")) // avaterは必須情報ではないため無視する
+                        } ?: run {
+                            showToast(getString(R.string.fragment_contributors_error_get_user))
+                        }
                     }
                 })
                 setOnLoadMoreListener(object : ContributorsAdapter.OnLoadMoreListener {
@@ -168,13 +173,13 @@ class ContributorsFragment : BaseFragment() {
 
     private fun handleErrorForEventOfContributors(e: Throwable) {
         Timber.e(e)
-        val message = getString(R.string.fragment_contributors_error_message)
+        val message = getString(R.string.fragment_contributors_error_get_contributors_message)
         handleError(message)
     }
 
     private fun handleErrorForUpdateList(e: Throwable) {
         Timber.e(e)
-        val message = getString(R.string.fragment_contributors_error_message)
+        val message = getString(R.string.fragment_contributors_error_get_contributors_message)
         handleError(message)
     }
 

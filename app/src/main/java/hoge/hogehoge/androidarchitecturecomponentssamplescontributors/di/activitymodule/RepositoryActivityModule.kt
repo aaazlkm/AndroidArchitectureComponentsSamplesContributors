@@ -9,6 +9,7 @@ import dagger.multibindings.IntoMap
 import hoge.hogehoge.core.di.viewmodel.ViewModelKey
 import hoge.hogehoge.presentation.repository.RepositoryActivity
 import hoge.hogehoge.presentation.repository.contributor.ContributorFragment
+import hoge.hogehoge.presentation.repository.contributor.ContributorViewModel
 import hoge.hogehoge.presentation.repository.contributors.ContributorsFragment
 import hoge.hogehoge.presentation.repository.contributors.ContributorsViewModel
 import hoge.hogehoge.presentation.repository.repository.RepositoryFragment
@@ -32,5 +33,12 @@ interface RepositoryActivityModule {
     @ViewModelKey(ContributorsViewModel::class)
     fun bindsContributorsViewModel(
         contributorsViewModel: ContributorsViewModel
+    ): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(ContributorViewModel::class)
+    fun bindsContributorViewModel(
+        contributorViewModel: ContributorViewModel
     ): ViewModel
 }
