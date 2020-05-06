@@ -20,7 +20,6 @@ import javax.inject.Inject
 import timber.log.Timber
 
 class ContributorsFragment : BaseFragment() {
-
     //region arguments
 
     private val args: ContributorsFragmentArgs by navArgs()
@@ -71,6 +70,8 @@ class ContributorsFragment : BaseFragment() {
     }
 
     //endregion
+
+    //region setup methods
 
     private fun bindUI() {
         with(binding.swipeRefreshLayout) {
@@ -168,6 +169,8 @@ class ContributorsFragment : BaseFragment() {
         val lastScrollPosition = (binding.contributorRecyclerView.layoutManager as? LinearLayoutManager)?.findFirstCompletelyVisibleItemPosition() ?: 0
         viewModel.saveStatus(contributors, lastScrollPosition)
     }
+
+    //endregion
 
     //region handle error
 

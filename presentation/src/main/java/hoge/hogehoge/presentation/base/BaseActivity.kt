@@ -1,23 +1,24 @@
 package hoge.hogehoge.presentation.base
 
-import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import androidx.appcompat.widget.Toolbar
+import androidx.navigation.findNavController
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.android.support.DaggerAppCompatActivity
 import hoge.hogehoge.presentation.R
-import hoge.hogehoge.presentation.databinding.ViewLoadingBinding
 
 open class BaseActivity : DaggerAppCompatActivity() {
-    private lateinit var loadingView: ViewLoadingBinding
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        loadingView = ViewLoadingBinding.inflate(this.layoutInflater, findViewById(android.R.id.content), true)
+    private val loadingView: View by lazy {
+        findViewById<View>(R.id.loadingView)
     }
 
     fun setupActionBar(title: String) {
-        supportActionBar?.title = title
+        val navController = findNavController(R.id.nav_host_fragment)
+        val appBarConfiguration = AppBarConfiguration(navController.graph)
+        findViewById<Toolbar>(R.id.toolbar).setupWithNavController(navController, appBarConfiguration)
     }
 
     fun showToast(message: String) {
@@ -46,6 +47,6 @@ open class BaseActivity : DaggerAppCompatActivity() {
     }
 
     fun setLoadingView(needShow: Boolean) {
-        loadingView.root.visibility = if (needShow) View.VISIBLE else View.GONE
+        loadingView.visibility = if (needShow) View.VISIBLE else View.GONE
     }
 }

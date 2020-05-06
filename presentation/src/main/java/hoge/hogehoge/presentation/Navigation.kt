@@ -20,7 +20,7 @@ fun ContributorsFragment.navigateToContributorFragment(nameTransitionPack: Pair<
     // 画像のtransition animationさせるのに画面間で共通のtransitionName設定が必要
     nameTransitionPack.first.transitionName = nameTransitionPack.second
     avaterTransitionPack.first.transitionName = avaterTransitionPack.second
-    val action = ContributorsFragmentDirections.actionContributorsFragmentToContributorFragment(nameTransitionPack.second, avaterTransitionPack.second)
+    val action = ContributorsFragmentDirections.actionContributorsFragmentToUserFragment(nameTransitionPack.second, avaterTransitionPack.second)
     val extra = FragmentNavigatorExtras(
         nameTransitionPack,
         avaterTransitionPack
