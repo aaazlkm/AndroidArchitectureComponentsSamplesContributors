@@ -26,9 +26,7 @@ object GetContributorsAPI {
 
         override val parameter: Map<String, String>
             get() = mutableMapOf(
-                QueryName.ANON.queryName to "$needAnonymous",
-                "client_id" to "068a8ed99e0a962b8d1c",
-                "client_secret" to "db14c42faabb64069a6c7b02a09da77e868f645c"
+                QueryName.ANON.queryName to "$needAnonymous"
             ).apply {
                 page?.let { this[QueryName.Page.queryName] = "$page" }
             }

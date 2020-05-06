@@ -25,30 +25,38 @@
     <fragment
         android:id="@+id/contributorsFragment"
         android:name="hoge.hogehoge.presentation.repository.contributors.ContributorsFragment"
-        android:label="ContributorsFragment"
+        android:label="{repository}"
         tools:layout="@layout/fragment_contributors">
-        <action
-            android:id="@+id/action_contributorsFragment_to_contributorFragment"
-            app:destination="@id/contributorFragment">
-            <argument
-                android:name="contributor"
-                app:argType="hoge.hogehoge.domain.entity.Contributor" />
-        </action>
         <argument
             android:name="owner"
             app:argType="string" />
         <argument
             android:name="repository"
             app:argType="string" />
+
+        <action
+            android:id="@+id/action_contributorsFragment_to_userFragment"
+            app:destination="@id/userFragment"
+            app:popExitAnim="@anim/slide_to_bottom">
+            <argument
+                android:name="userName"
+                app:argType="string" />
+            <argument
+                android:name="avatarUrl"
+                app:argType="string" />
+        </action>
     </fragment>
 
     <fragment
-        android:id="@+id/contributorFragment"
-        android:name="hoge.hogehoge.presentation.repository.contributor.ContributorFragment"
-        android:label="ContributorFragment"
-        tools:layout="@layout/fragment_contributor">
+        android:id="@+id/userFragment"
+        android:name="hoge.hogehoge.presentation.user.UserFragment"
+        android:label="Contributor"
+        tools:layout="@layout/fragment_user">
         <argument
-            android:name="contributor"
-            app:argType="hoge.hogehoge.domain.entity.Contributor" />
+            android:name="userName"
+            app:argType="string" />
+        <argument
+            android:name="avatarUrl"
+            app:argType="string" />
     </fragment>
 </navigation>

@@ -24,7 +24,7 @@ class ContributorsAdapter(
     //region Listener
 
     interface OnItemClickListener {
-        fun onItemClicked(contributor: Contributor)
+        fun onItemClicked(binding: ItemContributorBinding, contributor: Contributor)
     }
 
     interface OnLoadMoreListener {
@@ -85,7 +85,7 @@ class ContributorsAdapter(
                     loadUserIcon(imageView, contributor)
                     nameText.text = contributor.login ?: ""
                     contributionsText.text = "${contributor.contributions}"
-                    container.setOnClickListener { onItemClickListener?.onItemClicked(contributor) }
+                    container.setOnClickListener { onItemClickListener?.onItemClicked(holder.binding, contributor) }
                 }
             }
             is ViewHolder.Progress -> {
@@ -163,6 +163,7 @@ class ContributorsAdapter(
         imageView.load(contributor.avatarUrl) {
             placeholder(R.drawable.placeholder)
             crossfade(true)
+            error(R.drawable.placeholder)
             transformations(CircleCropTransformation())
         }
     }

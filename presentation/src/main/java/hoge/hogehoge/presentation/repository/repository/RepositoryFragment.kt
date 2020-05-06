@@ -22,10 +22,17 @@ class RepositoryFragment : BaseFragment() {
         super.onCreateView(inflater, container, savedInstanceState)
         binding = FragmentRepositoryBinding.inflate(inflater)
 
-        navigateToContributorsFragment("googlesamples", "android-architecture-components")
+        bindUI()
 
         return binding.root
     }
 
     //endregion
+
+    private fun bindUI() {
+        binding.navigateButton
+            .setOnClickListener {
+                navigateToContributorsFragment("googlesamples", "android-architecture-components")
+            }
+    }
 }
