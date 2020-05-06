@@ -91,7 +91,7 @@ class ContributorsAdapter : ListAdapter<ContributorsAdapter.Item, ContributorsAd
                 val progressBinding: ItemProgressBinding = ItemProgressBinding.inflate(LayoutInflater.from(parent.context), parent, false)
                 ViewHolder.Progress(progressBinding)
             }
-            else -> throw IllegalArgumentException("illegal view type. please confirm view type: $viewType")
+            else -> throw IllegalArgumentException("Illegal view type. please confirm view type: $viewType")
         }
     }
 

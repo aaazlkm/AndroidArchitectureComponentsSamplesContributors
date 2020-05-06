@@ -29,7 +29,7 @@ class GithubUseCaseImpl @Inject constructor(
         return githubRepository.fetchContributors(request)
             .map {
                 val linkHeader = LinkHeader.from(it.rawLinkHeader)
-                val contributors = it.rawContributors.map { Contributor.from(it) }
+                val contributors = it.rawContributors.mapNotNull { Contributor.from(it) } // 変換に失敗したデータは無視する
                 linkHeader to contributors
             }
             .toResult()

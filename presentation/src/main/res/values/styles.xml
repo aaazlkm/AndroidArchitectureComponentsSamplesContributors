@@ -10,18 +10,13 @@
         <item name="android:textSize">@dimen/text_size_16sp</item>
     </style>
 
-    <style name="Toolbar" parent="@style/Widget.AppCompat.Toolbar">
-        <item name="titleTextAppearance">@style/TextAppearance.Toolbar</item>
-    </style>
-
-    <style name="TextAppearance.Toolbar" parent="TextAppearance.AppCompat.Widget.ActionBar.Title">
-        <item name="android:textColor">@color/mc_white</item>
-        <item name="android:textAllCaps">false</item>
+    <style name="Toolbar" parent="@style/ThemeOverlay.AppCompat.ActionBar">
+        <item name="android:textColorPrimary">@color/mc_white</item>
+        <item name="colorControlNormal">@color/mc_white</item>
     </style>
 
     <style name="TabCustomForTextAppearance" parent="TextAppearance.Design.Tab">
         <item name="textAllCaps">false</item>
         <item name="android:textAllCaps">false</item>
     </style>
-
 </resources>

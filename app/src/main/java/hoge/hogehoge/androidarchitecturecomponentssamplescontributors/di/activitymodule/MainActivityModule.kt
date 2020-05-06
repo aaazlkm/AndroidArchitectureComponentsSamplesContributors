@@ -7,7 +7,7 @@ import dagger.Module
 import dagger.android.ContributesAndroidInjector
 import dagger.multibindings.IntoMap
 import hoge.hogehoge.core.di.viewmodel.ViewModelKey
-import hoge.hogehoge.presentation.repository.RepositoryActivity
+import hoge.hogehoge.presentation.MainActivity
 import hoge.hogehoge.presentation.repository.contributors.ContributorsFragment
 import hoge.hogehoge.presentation.repository.contributors.ContributorsViewModel
 import hoge.hogehoge.presentation.repository.repository.RepositoryFragment
@@ -19,9 +19,9 @@ import hoge.hogehoge.presentation.user.repositories.RepositoriesFragment
 import hoge.hogehoge.presentation.user.stars.StarsFragment
 
 @Module
-interface RepositoryActivityModule {
+interface MainActivityModule {
     @Binds
-    fun bindsRepositoryActivity(repositoryActivity: RepositoryActivity): AppCompatActivity
+    fun bindsRepositoryActivity(mainActivity: MainActivity): AppCompatActivity
 
     @ContributesAndroidInjector
     fun contributeRepositoryFragment(): RepositoryFragment

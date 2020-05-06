@@ -107,7 +107,7 @@ class UserFragment : BaseFragment() {
 
         viewModel.user
             .subscribe {
-                applyUserToView(it)
+                setupUserView(it)
             }
             .addTo(compositeDisposable)
     }
@@ -125,7 +125,7 @@ class UserFragment : BaseFragment() {
             transformations(CircleCropTransformation())
         }
 
-        // TranstionAnimationの終了をViewModelに伝える
+        // TransitionAnimationの終了をViewModelに伝える
         (sharedElementEnterTransition as Transition?)?.addListener(object : TransitionListenerAdapter() {
             override fun onTransitionEnd(transition: Transition) {
                 super.onTransitionEnd(transition)
@@ -141,67 +141,92 @@ class UserFragment : BaseFragment() {
 
     //endregion
 
-    private fun applyUserToView(user: User) {
-        TransitionManager.beginDelayedTransition(binding.container)
+    //region setup user view
 
-        if (user.bio.isNullOrBlank()) {
+    private fun setupUserView(user: User) {
+        TransitionManager.beginDelayedTransition(binding.container)
+        setupBioView(user.bio)
+        setupLocationView(user.location)
+        setupBlogView(user.blog)
+        setupEmailView(user.email)
+        setupRepositoriesTab(user.publicRepos)
+        setupFollowersTab(user.followers)
+        setupFollowingTab(user.following)
+    }
+
+    private fun setupBioView(bio: String?) {
+        if (bio.isNullOrBlank()) {
             binding.bioTextView.visibility = View.GONE
         } else {
-            binding.bioTextView.text = user.bio
+            binding.bioTextView.text = bio
             binding.bioTextView.visibility = View.VISIBLE
         }
+    }
 
-        if (user.location.isNullOrBlank()) {
+    private fun setupLocationView(location: String?) {
+        if (location.isNullOrBlank()) {
             binding.locationContainer.visibility = View.GONE
         } else {
-            binding.locationTextView.text = user.location
+            binding.locationTextView.text = location
             binding.locationContainer.visibility = View.VISIBLE
         }
+    }
 
-        if (user.blog.isNullOrBlank()) {
+    private fun setupBlogView(blog: String?) {
+        if (blog.isNullOrBlank()) {
             binding.blogContainer.visibility = View.GONE
         } else {
-            binding.blogTextView.text = user.blog
+            binding.blogTextView.text = blog
             binding.blogContainer.visibility = View.VISIBLE
         }
+    }
 
-        if (user.email.isNullOrBlank()) {
+    private fun setupEmailView(email: String?) {
+        if (email.isNullOrBlank()) {
             binding.mailContainer.visibility = View.GONE
         } else {
-            binding.mailTextView.text = user.email
+            binding.mailTextView.text = email
             binding.mailContainer.visibility = View.VISIBLE
         }
+    }
 
+    private fun setupRepositoriesTab(publicRepos: Int) {
         val repositoriesTabIndex = TabItem.values().indexOf(TabItem.REPOSITORIES)
         binding.tabLayout.getTabAt(repositoriesTabIndex)?.orCreateBadge?.run {
-            if (user.publicRepos != 0) {
+            if (publicRepos != 0) {
                 isVisible = true
-                number = user.publicRepos
-            } else {
-                isVisible = false
-            }
-        }
-
-        val followersTabIndex = TabItem.values().indexOf(TabItem.FOLLOWERS)
-        binding.tabLayout.getTabAt(followersTabIndex)?.orCreateBadge?.run {
-            if (user.followers != 0) {
-                isVisible = true
-                number = user.followers
-            } else {
-                isVisible = false
-            }
-        }
-
-        val followingTabIndex = TabItem.values().indexOf(TabItem.FOLLOWING)
-        binding.tabLayout.getTabAt(followingTabIndex)?.orCreateBadge?.run {
-            if (user.following != 0) {
-                isVisible = true
-                number = user.following
+                number = publicRepos
             } else {
                 isVisible = false
             }
         }
     }
+
+    private fun setupFollowersTab(followers: Int) {
+        val followersTabIndex = TabItem.values().indexOf(TabItem.FOLLOWERS)
+        binding.tabLayout.getTabAt(followersTabIndex)?.orCreateBadge?.run {
+            if (followers != 0) {
+                isVisible = true
+                number = followers
+            } else {
+                isVisible = false
+            }
+        }
+    }
+
+    private fun setupFollowingTab(following: Int) {
+        val followingTabIndex = TabItem.values().indexOf(TabItem.FOLLOWING)
+        binding.tabLayout.getTabAt(followingTabIndex)?.orCreateBadge?.run {
+            if (following != 0) {
+                isVisible = true
+                number = following
+            } else {
+                isVisible = false
+            }
+        }
+    }
+
+    //endregion
 
     //region handle error
 

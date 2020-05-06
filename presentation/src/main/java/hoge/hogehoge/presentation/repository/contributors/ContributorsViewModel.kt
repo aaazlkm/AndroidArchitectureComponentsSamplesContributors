@@ -58,13 +58,12 @@ class ContributorsViewModel @Inject constructor(
         githubUseCase.fetchContributors(owner, repository, page)
             .subscribe { result ->
                 eventOfContributorsProcessor.onNext(result.map { true })
-                if (needLoading) {
-                    isLoadingProcessor.onNext(result is Result.Loading)
-                }
+
+                if (needLoading) isLoadingProcessor.onNext(result is Result.Loading)
+
                 if (result is Result.Success) {
-                    val (linkHeader, contributors) = result.value
-                    this.linkHeader = linkHeader
-                    this.contributorsInNextPageProcessor.onNext(contributors)
+                    this.linkHeader = result.value.first
+                    this.contributorsInNextPageProcessor.onNext(result.value.second)
                 }
             }
             .addTo(compositeDisposable)
