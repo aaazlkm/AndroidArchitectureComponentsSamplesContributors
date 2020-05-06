@@ -27,11 +27,15 @@ class UserViewModel @Inject constructor(
 
     //endregion
 
+    //region value
+
     private val isLoadingProcessor = PublishProcessor.create<Boolean>()
     val isLoading: Flowable<Boolean> = isLoadingProcessor.observeOn(AndroidSchedulers.mainThread())
 
     private val userProcessor = PublishProcessor.create<User>()
     lateinit var user: Flowable<User>
+
+    //endregion
 
     /**
      * 画面表示時に必ず呼ぶこと

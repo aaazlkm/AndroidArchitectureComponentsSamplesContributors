@@ -136,7 +136,7 @@ class UserFragment : BaseFragment() {
 
     private fun fetchData() {
         // 初回データ取得時はアニメーションを見せたいのでローディングを表示しない
-        viewModel.fetchUser(userName, false)
+        viewModel.fetchUser(userName, needLoading = false)
     }
 
     //endregion
