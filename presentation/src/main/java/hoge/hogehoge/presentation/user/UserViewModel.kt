@@ -52,10 +52,11 @@ class UserViewModel @Inject constructor(
 
     fun fetchUser(userName: String, needLoading: Boolean = true) {
         githubUseCase.fetchUser(userName)
+            .doOnNext { if (it is Result.Success) userProcessor.onNext(it.value) }
+            .doOnNext { if (needLoading) isLoadingProcessor.onNext(it is Result.Loading) }
+            .map { it.map { true } }
             .subscribe { result ->
-                if (needLoading) isLoadingProcessor.onNext(result is Result.Loading)
-                eventOfGettingUserProcessor.onNext(result.map { true })
-                if (result is Result.Success) userProcessor.onNext(result.value)
+                eventOfGettingUserProcessor.onNext(result)
             }
             .addTo(compositeDisposable)
     }

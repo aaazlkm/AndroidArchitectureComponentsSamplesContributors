@@ -15,7 +15,7 @@ data class Contributor(
     val gravatarId: String,
     val htmlUrl: String?,
     val id: Int?,
-    val login: String?,
+    val login: String,
     val nodeId: String?,
     val organizationsUrl: String?,
     val receivedEventsUrl: String?,
@@ -30,11 +30,15 @@ data class Contributor(
         /**
          * APIで取得したデータからContributorを生成する
          * デフォルトの値をいれる場合はここで行う
+         * 変換に失敗した場合nullを返す
+         *
+         * 必須のパラメータ
+         * - login
          *
          * @param rawContributor RawContributor
-         * @return Contributor
+         * @return Contributor?
          */
-        fun from(rawContributor: RawContributor): Contributor {
+        fun from(rawContributor: RawContributor): Contributor? {
             val avatarUrl = rawContributor.avatarUrl
             val contributions = rawContributor.contributions ?: 0
             val eventsUrl = rawContributor.eventsUrl
@@ -44,7 +48,7 @@ data class Contributor(
             val gravatarId = rawContributor.gravatarId ?: ""
             val htmlUrl = rawContributor.htmlUrl
             val id = rawContributor.id
-            val login = rawContributor.login
+            val login = rawContributor.login ?: return null
             val nodeId = rawContributor.nodeId
             val organizationsUrl = rawContributor.organizationsUrl
             val receivedEventsUrl = rawContributor.receivedEventsUrl

@@ -12,7 +12,7 @@ object GetContributorsAPI {
         val owner: String,
         val repository: String,
         /** Set to 1 or true to include anonymous contributors in results.*/
-        val needAnonymous: Boolean = true,
+        val needAnonymous: Boolean = false,
         val page: Int? = null
     ) : APIRequest<Response> {
         enum class QueryName(val queryName: String) {
