@@ -1,10 +1,9 @@
-package hoge.hogehoge.presentation.repository
+package hoge.hogehoge.presentation
 
 import android.os.Bundle
-import hoge.hogehoge.presentation.R
 import hoge.hogehoge.presentation.base.BaseActivity
 
-class RepositoryActivity : BaseActivity() {
+class MainActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

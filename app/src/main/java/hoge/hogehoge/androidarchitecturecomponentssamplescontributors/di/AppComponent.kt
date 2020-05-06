@@ -6,7 +6,7 @@ import dagger.Component
 import dagger.android.AndroidInjector
 import dagger.android.support.AndroidSupportInjectionModule
 import hoge.hogehoge.androidarchitecturecomponentssamplescontributors.App
-import hoge.hogehoge.androidarchitecturecomponentssamplescontributors.di.activitymodule.RepositoryActivityBuilder
+import hoge.hogehoge.androidarchitecturecomponentssamplescontributors.di.activitymodule.MainActivityBuilder
 import hoge.hogehoge.core.di.viewmodel.ViewModelModule
 import javax.inject.Singleton
 
@@ -19,7 +19,7 @@ import javax.inject.Singleton
         DomainModule::class,
         InfraModule::class,
         NetworkModule::class,
-        RepositoryActivityBuilder::class
+        MainActivityBuilder::class
     ]
 )
 interface AppComponent : AndroidInjector<App> {
