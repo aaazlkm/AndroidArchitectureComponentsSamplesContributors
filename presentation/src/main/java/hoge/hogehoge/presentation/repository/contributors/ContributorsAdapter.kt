@@ -1,25 +1,44 @@
 package hoge.hogehoge.presentation.repository.contributors
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import coil.api.load
 import coil.transform.CircleCropTransformation
 import hoge.hogehoge.domain.entity.Contributor
 import hoge.hogehoge.presentation.R
-import hoge.hogehoge.presentation.common.DiffUtilAdapter
 import hoge.hogehoge.presentation.databinding.ItemContributorBinding
 import hoge.hogehoge.presentation.databinding.ItemProgressBinding
 import hoge.hogehoge.presentation.repository.contributors.ContributorsAdapter.Item.ProgressItem.VIEW_TYPE
-import io.reactivex.disposables.CompositeDisposable
 
-class ContributorsAdapter(
-    private val context: Context,
-    private val compositeDisposable: CompositeDisposable
-) : DiffUtilAdapter<ContributorsAdapter.ViewHolder, ContributorsAdapter.Item>(compositeDisposable) {
+class ContributorsAdapter : ListAdapter<ContributorsAdapter.Item, ContributorsAdapter.ViewHolder>(DIFF_CALLBACK) {
+    companion object {
+        private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<Item>() {
+            override fun areItemsTheSame(oldItem: Item, newItem: Item): Boolean {
+                return if (oldItem is Item.ContributorItem && newItem is Item.ContributorItem) {
+                    oldItem.contributor.id == newItem.contributor.id
+                } else if (oldItem is Item.ProgressItem && newItem is Item.ProgressItem) {
+                    true
+                } else {
+                    return false
+                }
+            }
+
+            override fun areContentsTheSame(oldItem: Item, newItem: Item): Boolean {
+                return if (oldItem is Item.ContributorItem && newItem is Item.ContributorItem) {
+                    oldItem == newItem
+                } else if (oldItem is Item.ProgressItem && newItem is Item.ProgressItem) {
+                    true
+                } else {
+                    return false
+                }
+            }
+        }
+    }
 
     //region Listener
 
@@ -79,7 +98,7 @@ class ContributorsAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         when (holder) {
             is ViewHolder.Contributor -> {
-                val item = items[position] as Item.ContributorItem
+                val item = getItem(position) as? Item.ContributorItem ?: return
                 val contributor = item.contributor
                 with(holder.binding) {
                     loadUserIcon(imageView, contributor)
@@ -94,59 +113,33 @@ class ContributorsAdapter(
         }
     }
 
-    override fun getItemCount(): Int = items.size
-
-    override fun getItemViewType(position: Int): Int = items[position].viewType
-
-    //endregion
-
-    //region DiffUtilAdapter override methods
-
-    override fun areItemsTheSame(oldItem: Item, newItem: Item): Boolean {
-        return if (oldItem is Item.ContributorItem && newItem is Item.ContributorItem) {
-            oldItem.contributor.id == newItem.contributor.id
-        } else if (oldItem is Item.ProgressItem && newItem is Item.ProgressItem) {
-            true
-        } else {
-            return false
-        }
-    }
-
-    override fun areContentsTheSame(oldItem: Item, newItem: Item): Boolean {
-        return if (oldItem is Item.ContributorItem && newItem is Item.ContributorItem) {
-            oldItem == newItem
-        } else if (oldItem is Item.ProgressItem && newItem is Item.ProgressItem) {
-            true
-        } else {
-            return false
-        }
-    }
+    override fun getItemViewType(position: Int) = getItem(position).viewType
 
     //endregion
 
     fun insertContributorsAndResetProgress(contributors: List<Contributor>, doOnCompleted: (() -> Unit)? = null) {
         if (contributors.isEmpty()) return
-        items.filter { it !is Item.ProgressItem }
+        currentList.filter { it !is Item.ProgressItem }
             .toMutableList()
             .apply {
                 addAll(contributors.map { Item.ContributorItem(it) })
                 add(Item.ProgressItem)
             }
             .let {
-                updateItems(it) { doOnCompleted?.invoke() }
+                submitList(it) { doOnCompleted?.invoke() }
             }
     }
 
     fun getContributors(): List<Contributor> {
-        return items.mapNotNull { it as? Item.ContributorItem }.map { it.contributor }
+        return currentList.mapNotNull { it as? Item.ContributorItem }.map { it.contributor }
     }
 
     fun clearContributors() {
-        updateItems(listOf())
+        submitList(null)
     }
 
     fun removeProgressView() {
-        updateItems(items.filter { it !is Item.ProgressItem })
+        submitList(currentList.filter { it !is Item.ProgressItem })
     }
 
     fun setOnItemClickListener(listener: OnItemClickListener?) {

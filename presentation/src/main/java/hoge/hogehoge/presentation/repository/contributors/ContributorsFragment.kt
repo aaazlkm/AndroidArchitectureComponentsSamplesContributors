@@ -63,14 +63,6 @@ class ContributorsFragment : BaseFragment() {
 
     //endregion
 
-    //region BaseFragment override methods
-
-    override fun setupActionBar(title: String) {
-        super.setupActionBar(repository)
-    }
-
-    //endregion
-
     //region setup methods
 
     private fun bindUI() {
@@ -82,8 +74,9 @@ class ContributorsFragment : BaseFragment() {
         }
 
         with(binding.contributorRecyclerView) {
+            setHasFixedSize(true)
             layoutManager = LinearLayoutManager(this@ContributorsFragment.context)
-            adapter = ContributorsAdapter(context, compositeDisposable).apply {
+            adapter = ContributorsAdapter().apply {
                 setOnItemClickListener(object : ContributorsAdapter.OnItemClickListener {
                     override fun onItemClicked(binding: ItemContributorBinding, contributor: Contributor) {
                         contributor.login?.let {
@@ -100,15 +93,6 @@ class ContributorsFragment : BaseFragment() {
                 })
             }
         }
-
-        (binding.contributorRecyclerView.adapter as? ContributorsAdapter)?.updateResult
-            ?.subscribe { result ->
-                Timber.d("contributors list update result $result")
-                if (result is Failure) {
-                    handleErrorForUpdateList(result.error)
-                }
-            }
-            ?.addTo(compositeDisposable)
     }
 
     private fun bindViewModelEvent() {
