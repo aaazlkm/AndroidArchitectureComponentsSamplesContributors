@@ -9,8 +9,9 @@
         android:id="@+id/userNameText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="リポジトリ画面"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="42dp"
+        android:text="TODO: リポジトリ画面実装"
+        app:layout_constraintBottom_toTopOf="@+id/navigateButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -20,7 +21,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="42dp"
-        android:text="遷移する"
+        android:text="Contributors一覧画面へ遷移する"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/userNameText"
         app:layout_constraintStart_toStartOf="@+id/userNameText"
         app:layout_constraintTop_toBottomOf="@+id/userNameText" />
