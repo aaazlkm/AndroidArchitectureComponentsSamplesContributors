@@ -4,6 +4,33 @@
 
 [Android Architecture Components samples](https://github.com/googlesamples/android-architecture-components)リポジトリの contributors 一覧を表示するアプリ
 
+## プロジェクトの構造
+
+- 全体の構造
+  - 以下の三つの層からなるクリーンアーキテクチャを採用している
+    - presentation 層
+    - domain 層
+    - infra 層
+  - 大まかな役目としては
+    - infra 層で生のデータを取得し
+    - domain 層で生のデータをアプリ用に加工し
+    - presentation 層で加工したデータを表示する
+  - それぞれの層の繋ぎ目を RxJava によって実装している
+- 各層の詳細
+  - presentation 層
+    - 画面に関しての処理を行う層
+    - MVVM アーキテクチャを採用しており基本的に一画面につき以下がペアになる
+      - Fragment
+      - ViewModel
+  - domain 層
+    - アプリのドメインロジックについて実装する層
+    - presentation層とinfra層の仲介役を担う
+    - 具体的な処理としてはinfra 層で取得したデータを presentation 層で使う形(= アプリで使用する形)に加工するなど
+  - infra 層
+    - アプリで使用するデータを取得する層
+    - API や DB からデータを取得する
+    - この層では特にデータの加工などの処理は行わないで取得したデータをそのまま流す(加工などの処理は domain 層で行う)
+
 ## 使用ライブラリ
 
 - [android jetpack](https://developer.android.com/jetpack/)
