@@ -37,6 +37,7 @@
                 android:layout_height="@dimen/view_size_64dp"
                 android:layout_marginStart="@dimen/margin_16dp"
                 android:background="@drawable/placeholder"
+                android:backgroundTint="@color/common_background_main"
                 android:elevation="10dp"
                 app:layout_constraintBottom_toTopOf="@id/guidelineBottom"
                 app:layout_constraintEnd_toStartOf="@+id/userNameText"

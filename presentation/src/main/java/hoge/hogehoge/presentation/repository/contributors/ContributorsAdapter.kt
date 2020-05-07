@@ -76,8 +76,13 @@ class ContributorsAdapter : ListAdapter<ContributorsAdapter.Item, ContributorsAd
         data class Progress(val binding: ItemProgressBinding) : ViewHolder(binding.root)
     }
 
+    //region listener
+
     private var onItemClickListener: OnItemClickListener? = null
+
     private var onLoadMoreListener: OnLoadMoreListener? = null
+
+    //endregion
 
     //region RecyclerView.Adapter override methods
 
@@ -102,7 +107,7 @@ class ContributorsAdapter : ListAdapter<ContributorsAdapter.Item, ContributorsAd
                 val contributor = item.contributor
                 with(holder.binding) {
                     loadUserIcon(imageView, contributor)
-                    nameText.text = contributor.login ?: ""
+                    nameText.text = contributor.login
                     contributionsText.text = "${contributor.contributions}"
                     container.setOnClickListener { onItemClickListener?.onItemClicked(holder.binding, contributor) }
                 }
@@ -116,6 +121,8 @@ class ContributorsAdapter : ListAdapter<ContributorsAdapter.Item, ContributorsAd
     override fun getItemViewType(position: Int) = getItem(position).viewType
 
     //endregion
+
+    //region operate items methods
 
     fun insertContributorsAndResetProgress(contributors: List<Contributor>, doOnCompleted: (() -> Unit)? = null) {
         if (contributors.isEmpty()) return
@@ -135,12 +142,16 @@ class ContributorsAdapter : ListAdapter<ContributorsAdapter.Item, ContributorsAd
     }
 
     fun clearContributors() {
-        submitList(null)
+        submitList(listOf())
     }
 
     fun removeProgressView() {
         submitList(currentList.filter { it !is Item.ProgressItem })
     }
+
+    //endregion
+
+    //region setListener methods
 
     fun setOnItemClickListener(listener: OnItemClickListener?) {
         this.onItemClickListener = listener
@@ -150,7 +161,7 @@ class ContributorsAdapter : ListAdapter<ContributorsAdapter.Item, ContributorsAd
         this.onLoadMoreListener = listener
     }
 
-    //region load user icon
+    //endregion
 
     private fun loadUserIcon(imageView: ImageView, contributor: Contributor) {
         imageView.load(contributor.avatarUrl) {
@@ -160,6 +171,4 @@ class ContributorsAdapter : ListAdapter<ContributorsAdapter.Item, ContributorsAd
             transformations(CircleCropTransformation())
         }
     }
-
-    //endregion
 }

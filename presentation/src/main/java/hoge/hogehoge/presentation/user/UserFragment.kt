@@ -42,6 +42,7 @@ class UserFragment : BaseFragment() {
     lateinit var viewModelFactory: ViewModelFactory
     private lateinit var viewModel: UserViewModel
 
+    /** transition animation の終了を通知するProcessor */
     private val eventOfTransitionAnimationFinishedProcessor = PublishProcessor.create<Boolean>()
 
     //region lifecycle

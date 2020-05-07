@@ -16,12 +16,16 @@ import javax.inject.Inject
 class ContributorsViewModel @Inject constructor(
     private val githubUseCase: GithubUseCase
 ) : BaseViewModel() {
-    sealed class Status {
-        object Initialized : Status()
-        data class Saved(
+    /** 初期化処理 */
+    sealed class Initialization {
+        /** 初めて画面を開いた時 */
+        object ForFirstTime : Initialization()
+
+        /** 他の画面から戻った時 */
+        data class ForBacked(
             var contributors: List<Contributor>,
             var lastScrollPosition: Int
-        ) : Status()
+        ) : Initialization()
     }
 
     private var linkHeader: LinkHeader? = null
@@ -38,13 +42,20 @@ class ContributorsViewModel @Inject constructor(
     private val isLoadingProcessor = PublishProcessor.create<Boolean>()
     val isLoading: Flowable<Boolean> = isLoadingProcessor.observeOn(AndroidSchedulers.mainThread())
 
-    private var statusProcessor = BehaviorProcessor.createDefault<Status>(Status.Initialized)
-    val status: Flowable<Status> = statusProcessor.observeOn(AndroidSchedulers.mainThread())
+    private var initializationProcessor = BehaviorProcessor.createDefault<Initialization>(Initialization.ForFirstTime)
+    val initialization: Flowable<Initialization> = initializationProcessor.observeOn(AndroidSchedulers.mainThread())
 
     private val contributorsInNextPageProcessor = PublishProcessor.create<List<Contributor>>()
     val contributorsInNextPage: Flowable<List<Contributor>> = contributorsInNextPageProcessor.observeOn(AndroidSchedulers.mainThread())
 
     //endregion
+
+    //region fetch contributors methods
+
+    fun fetchContributorsInitial(owner: String, repository: String, needLoading: Boolean = true) {
+        // 初回はページを指定しない
+        fetchContributors(owner, repository, null, needLoading)
+    }
 
     fun fetchContributorsInNextPage(owner: String, repository: String, needLoading: Boolean = true) {
         linkHeader?.nextPage?.let {
@@ -54,7 +65,7 @@ class ContributorsViewModel @Inject constructor(
         }
     }
 
-    fun fetchContributors(owner: String, repository: String, page: Int? = null, needLoading: Boolean = true) {
+    private fun fetchContributors(owner: String, repository: String, page: Int? = null, needLoading: Boolean = true) {
         githubUseCase.fetchContributors(owner, repository, page)
             .subscribe { result ->
                 eventOfContributorsProcessor.onNext(result.map { true })
@@ -69,13 +80,19 @@ class ContributorsViewModel @Inject constructor(
             .addTo(compositeDisposable)
     }
 
-    fun initializeStatus() {
+    //endregion
+
+    //region initialization methods
+
+    fun initializeToFirstTime() {
         linkHeader = null
         compositeDisposable.clear()
-        statusProcessor.onNext(Status.Initialized)
+        initializationProcessor.onNext(Initialization.ForFirstTime)
     }
 
-    fun saveStatus(contributors: List<Contributor>, lastShowedPosition: Int) {
-        statusProcessor.onNext(Status.Saved(contributors, lastShowedPosition))
+    fun prepareForInitializationOfBack(contributors: List<Contributor>, lastShowedPosition: Int) {
+        initializationProcessor.onNext(Initialization.ForBacked(contributors, lastShowedPosition))
     }
+
+    //endregion
 }

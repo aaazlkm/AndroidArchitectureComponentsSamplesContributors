@@ -9,6 +9,10 @@ import hoge.hogehoge.presentation.databinding.FragmentRepositoryBinding
 import hoge.hogehoge.presentation.navigateToContributorsFragment
 
 class RepositoryFragment : BaseFragment() {
+    companion object {
+        const val OWNER_GOOGLE_SAMPLES = "googlesamples"
+        const val REPOSITORY_ANDROID_ARCHITECTURE_COMPONENTS = "android-architecture-components"
+    }
 
     private lateinit var binding: FragmentRepositoryBinding
 
@@ -32,7 +36,7 @@ class RepositoryFragment : BaseFragment() {
     private fun bindUI() {
         binding.navigateButton
             .setOnClickListener {
-                navigateToContributorsFragment("googlesamples", "android-architecture-components")
+                navigateToContributorsFragment(OWNER_GOOGLE_SAMPLES, REPOSITORY_ANDROID_ARCHITECTURE_COMPONENTS)
             }
     }
 }
