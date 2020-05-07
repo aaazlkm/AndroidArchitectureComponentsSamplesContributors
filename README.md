@@ -12,15 +12,16 @@
     - Android KTX
     - Test
   - Architecture
-    - DataBinding
+    - ViewBinding
     - ViewModel
-    - Room
+    - navigation
   - UI
     - constraintlayout
     - swiperefreshlayout
     - recyclerview
 - [kotlin](https://kotlinlang.org/)
 - [Material Components for Android](https://github.com/material-components/material-components-android)
+- [coil](https://github.com/coil-kt/coil)
 - [RxJava](https://github.com/ReactiveX/RxJava)
 - [RxAndroid](https://github.com/ReactiveX/RxAndroid)
 - [RxKotlin](https://github.com/ReactiveX/RxKotlin)
