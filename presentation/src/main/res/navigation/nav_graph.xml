@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/repositoryFragment">
+
+    <fragment
+        android:id="@+id/repositoryFragment"
+        android:name="hoge.hogehoge.presentation.repository.repository.RepositoryFragment"
+        android:label="android-architecture-components"
+        tools:layout="@layout/fragment_repository">
+        <action
+            android:id="@+id/action_repositoryFragment_to_contributorsFragment"
+            app:destination="@id/contributorsFragment">
+            <argument
+                android:name="owner"
+                app:argType="string" />
+            <argument
+                android:name="repository"
+                app:argType="string" />
+        </action>
+    </fragment>
+
+    <fragment
+        android:id="@+id/contributorsFragment"
+        android:name="hoge.hogehoge.presentation.repository.contributors.ContributorsFragment"
+        android:label="Contributors"
+        tools:layout="@layout/fragment_contributors">
+        <argument
+            android:name="owner"
+            app:argType="string" />
+        <argument
+            android:name="repository"
+            app:argType="string" />
+
+        <action
+            android:id="@+id/action_contributorsFragment_to_userFragment"
+            app:destination="@id/userFragment"
+            app:popExitAnim="@anim/slide_to_bottom">
+            <argument
+                android:name="userName"
+                app:argType="string" />
+            <argument
+                android:name="avatarUrl"
+                app:argType="string" />
+        </action>
+    </fragment>
+
+    <fragment
+        android:id="@+id/userFragment"
+        android:name="hoge.hogehoge.presentation.user.UserFragment"
+        android:label="User"
+        tools:layout="@layout/fragment_user">
+        <argument
+            android:name="userName"
+            app:argType="string" />
+        <argument
+            android:name="avatarUrl"
+            app:argType="string" />
+    </fragment>
+</navigation>
