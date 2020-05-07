@@ -15,7 +15,6 @@
 
     <!--  fragment contributors  -->
     <string name="fragment_contributors_item_contributions">contributions:</string>
-    <string name="fragment_contributors_error_get_user">ユーザーを取得できません</string>
     <string name="fragment_contributors_error_get_contributors_message">Contributorsの取得に失敗しました</string>
 
     <!--  fragment user  -->

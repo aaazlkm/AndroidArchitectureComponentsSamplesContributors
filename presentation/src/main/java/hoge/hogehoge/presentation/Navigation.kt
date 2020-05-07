@@ -9,14 +9,12 @@ import hoge.hogehoge.presentation.repository.contributors.ContributorsFragmentDi
 import hoge.hogehoge.presentation.repository.repository.RepositoryFragment
 import hoge.hogehoge.presentation.repository.repository.RepositoryFragmentDirections
 
-//region repository
-
 fun RepositoryFragment.navigateToContributorsFragment(owner: String, repository: String) {
     val action = RepositoryFragmentDirections.actionRepositoryFragmentToContributorsFragment(owner, repository)
     findNavController().navigate(action)
 }
 
-fun ContributorsFragment.navigateToContributorFragment(nameTransitionPack: Pair<TextView, String>, avaterTransitionPack: Pair<ImageView, String>) {
+fun ContributorsFragment.navigateToUserFragment(nameTransitionPack: Pair<TextView, String>, avaterTransitionPack: Pair<ImageView, String>) {
     // 画像のtransition animationさせるのに画面間で共通のtransitionName設定が必要
     nameTransitionPack.first.transitionName = nameTransitionPack.second
     avaterTransitionPack.first.transitionName = avaterTransitionPack.second
@@ -27,5 +25,3 @@ fun ContributorsFragment.navigateToContributorFragment(nameTransitionPack: Pair<
     )
     findNavController().navigate(action, extra)
 }
-
-//endregion

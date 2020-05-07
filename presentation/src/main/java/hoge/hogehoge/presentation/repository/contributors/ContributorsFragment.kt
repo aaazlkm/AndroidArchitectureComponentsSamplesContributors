@@ -14,7 +14,7 @@ import hoge.hogehoge.presentation.R
 import hoge.hogehoge.presentation.base.BaseFragment
 import hoge.hogehoge.presentation.databinding.FragmentContributorsBinding
 import hoge.hogehoge.presentation.databinding.ItemContributorBinding
-import hoge.hogehoge.presentation.navigateToContributorFragment
+import hoge.hogehoge.presentation.navigateToUserFragment
 import io.reactivex.rxkotlin.addTo
 import javax.inject.Inject
 import timber.log.Timber
@@ -58,7 +58,7 @@ class ContributorsFragment : BaseFragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        saveState()
+        prepareForInitializationOfBack()
     }
 
     //endregion
@@ -69,7 +69,7 @@ class ContributorsFragment : BaseFragment() {
         with(binding.swipeRefreshLayout) {
             setColorSchemeResources(R.color.colorAccent)
             setOnRefreshListener {
-                viewModel.initializeStatus()
+                viewModel.initializeToFirstTime()
             }
         }
 
@@ -79,16 +79,15 @@ class ContributorsFragment : BaseFragment() {
             adapter = ContributorsAdapter().apply {
                 setOnItemClickListener(object : ContributorsAdapter.OnItemClickListener {
                     override fun onItemClicked(binding: ItemContributorBinding, contributor: Contributor) {
-                        contributor.login?.let {
-                            navigateToContributorFragment(binding.nameText to it, binding.imageView to (contributor.avatarUrl ?: "")) // avaterは必須情報ではないため無視する
-                        } ?: run {
-                            showToast(getString(R.string.fragment_contributors_error_get_user))
-                        }
+                        navigateToUserFragment(
+                            binding.nameText to contributor.login,
+                            binding.imageView to (contributor.avatarUrl ?: "") // avaterは必須情報ではないため無視する
+                        )
                     }
                 })
                 setOnLoadMoreListener(object : ContributorsAdapter.OnLoadMoreListener {
                     override fun onLoadMore() {
-                        viewModel.fetchContributorsInNextPage(owner, repository, false)
+                        viewModel.fetchContributorsInNextPage(owner, repository, needLoading = false) // adapter側でloadingを出しているため
                     }
                 })
             }
@@ -113,21 +112,20 @@ class ContributorsFragment : BaseFragment() {
             }
             .addTo(compositeDisposable)
 
-        viewModel.status
-            .subscribe { status ->
-                when (status) {
-                    is ContributorsViewModel.Status.Initialized -> {
+        viewModel.initialization
+            .subscribe { initialization ->
+                when (initialization) {
+                    is ContributorsViewModel.Initialization.ForFirstTime -> {
                         (binding.contributorRecyclerView.adapter as? ContributorsAdapter)?.run {
                             clearContributors()
                         }
-                        viewModel.fetchContributors(owner, repository)
+                        viewModel.fetchContributorsInitial(owner, repository)
                     }
-                    is ContributorsViewModel.Status.Saved -> {
+                    is ContributorsViewModel.Initialization.ForBacked -> {
                         (binding.contributorRecyclerView.adapter as? ContributorsAdapter)?.run {
-                            val (contributors, lastShowedPosition) = status
-                            insertContributorsAndResetProgress(contributors) {
-                                binding.contributorRecyclerView.scrollToPosition(lastShowedPosition)
-                            }
+                            val (contributors, lastShowedPosition) = initialization
+                            insertContributorsAndResetProgress(contributors)
+                            binding.contributorRecyclerView.scrollToPosition(lastShowedPosition)
                         }
                     }
                 }
@@ -148,10 +146,10 @@ class ContributorsFragment : BaseFragment() {
             .addTo(compositeDisposable)
     }
 
-    private fun saveState() {
+    private fun prepareForInitializationOfBack() {
         val contributors = (binding.contributorRecyclerView.adapter as? ContributorsAdapter)?.getContributors() ?: listOf()
         val lastScrollPosition = (binding.contributorRecyclerView.layoutManager as? LinearLayoutManager)?.findFirstCompletelyVisibleItemPosition() ?: 0
-        viewModel.saveStatus(contributors, lastScrollPosition)
+        viewModel.prepareForInitializationOfBack(contributors, lastScrollPosition)
     }
 
     //endregion
@@ -164,19 +162,13 @@ class ContributorsFragment : BaseFragment() {
         handleError(message)
     }
 
-    private fun handleErrorForUpdateList(e: Throwable) {
-        Timber.e(e)
-        val message = getString(R.string.fragment_contributors_error_get_contributors_message)
-        handleError(message)
-    }
-
     private fun handleError(message: String) {
         with(binding.retryView) {
             binding.retryView.root.visibility = View.VISIBLE
             messageText.text = message
             retryButton.setOnClickListener {
                 binding.retryView.root.visibility = View.GONE
-                viewModel.initializeStatus()
+                viewModel.initializeToFirstTime()
             }
         }
     }
